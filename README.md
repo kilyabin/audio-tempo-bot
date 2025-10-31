@@ -155,7 +155,7 @@ audio-tempo-bot/
 
 ## 📞  Поддержка
 
-Если у вас возникли вопросы или проблемы, откройте [issue](https://github.com/yourusername/audio-tempo-bot/issues) на GitHub.
+Если у вас возникли вопросы или проблемы, откройте [issue](https://github.com/kilyabin/audio-tempo-bot/issues) на GitHub.
 
 ---
 
