@@ -460,45 +460,30 @@ class AudioProcessor:
             logger.error(f"Ошибка при извлечении аудио: {e}", exc_info=True)
             return False
     
-    def get_output_filename(self, original_filename: str, speed_factor: float) -> str:
-        """
-        Генерирует имя выходного файла
-        
-        Args:
-            original_filename: Исходное имя файла
-            speed_factor: Коэффициент скорости
-        
-        Returns:
-            Новое имя файла
-        """
-        # Получаем имя и расширение
-        path = Path(original_filename)
-        stem = path.stem
-        suffix = path.suffix
-        
-        # Определяем, что добавить к названию
-        if speed_factor < 1.0:
-            speed_tag = " (Slowed)"
-        elif speed_factor > 1.0:
-            speed_tag = " (Speed Up)"
-        else:
-            speed_tag = ""
-        
-        # Убираем старые теги, если они есть
-        stem_clean = stem.replace(" (Slowed)", "").replace(" (Speed Up)", "").strip()
-        
-        # Добавляем новый тег
-        new_stem = stem_clean + speed_tag
-        
-        # Также добавляем процент для совместимости
-        speed_percent = int((speed_factor - 1.0) * 100)
-        if speed_percent != 0:
-        if speed_percent >= 0:
-                speed_str = f"_{speed_percent:+d}%"
-            else:
-                speed_str = f"_{speed_percent}%"
-        else:
-            speed_str = ""
+def get_output_filename(self, original_filename: str, speed_factor: float) -> str:
+    path = Path(original_filename)
+    stem = path.stem
+    suffix = path.suffix
+
+    if speed_factor < 1.0:
+        speed_tag = " (Slowed)"
+    elif speed_factor > 1.0:
+        speed_tag = " (Speed Up)"
+    else:
+        speed_tag = ""
+
+    stem_clean = stem.replace(" (Slowed)", "").replace(" (Speed Up)", "").strip()
+    new_stem = stem_clean + speed_tag
+
+    # Также добавляем процент для совместимости
+    speed_percent = int((speed_factor - 1.0) * 100)
+    if speed_percent != 0:
+        # добавляем знак + для положительных значений автоматически
+        speed_str = f" {speed_percent:+d}%"
+    else:
+        speed_str = ""
+
+    return f"{new_stem}{speed_str}{suffix}"
         
         return f"{new_stem}{speed_str}{suffix}"
     
